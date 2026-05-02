@@ -51,12 +51,26 @@ existing_appointments = [
     Appointment("Bob", datetime(2026, 5, 1, 11, 0), datetime(2026, 5, 1, 11, 30)),
 ]
 
-requested_appointment = Appointment(
+
+print("\n--- Test Case 1: Conflicting Appointment ---")
+
+requested_appointment_1 = Appointment(
     "Dana",
     datetime(2026, 5, 1, 9, 30),
     datetime(2026, 5, 1, 10, 30)
 )
 
-result = can_schedule_appointment(requested_appointment, existing_appointments)
+result_1 = can_schedule_appointment(requested_appointment_1, existing_appointments)
+print_result(requested_appointment_1, result_1)
 
-print_result(requested_appointment, result)
+
+print("\n--- Test Case 2: Available Appointment ---")
+
+requested_appointment_2 = Appointment(
+    "Charlie",
+    datetime(2026, 5, 1, 10, 0),
+    datetime(2026, 5, 1, 10, 30)
+)
+
+result_2 = can_schedule_appointment(requested_appointment_2, existing_appointments)
+print_result(requested_appointment_2, result_2)
