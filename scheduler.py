@@ -10,6 +10,11 @@ class Appointment:
         if end_time <= start_time:
             raise ValueError("End time must be after start time.")
 
+    def formatted_time(self):
+        start = self.start_time.strftime("%B %-d from %-I:%M %p")
+        end = self.end_time.strftime("%-I:%M %p")
+        return f"{self.client_name}, {start} to {end}"
+
 
 def can_schedule_appointment(requested_appointment, existing_appointments):
     for appointment in existing_appointments:
@@ -19,9 +24,26 @@ def can_schedule_appointment(requested_appointment, existing_appointments):
         )
 
         if overlaps:
-            return False
+            return {
+                "available": False,
+                "reason": f"Conflicts with {appointment.client_name}"
+            }
 
-    return True
+    return {
+        "available": True,
+        "reason": "Appointment can be scheduled"
+    }
+
+
+def print_result(requested_appointment, result):
+    print(f"Requested appointment: {requested_appointment.formatted_time()}")
+
+    if result["available"]:
+        print("Result: Available")
+    else:
+        print("Result: Not available")
+
+    print(f"Reason: {result['reason']}")
 
 
 existing_appointments = [
@@ -37,4 +59,4 @@ requested_appointment = Appointment(
 
 result = can_schedule_appointment(requested_appointment, existing_appointments)
 
-print(result)
+print_result(requested_appointment, result)
